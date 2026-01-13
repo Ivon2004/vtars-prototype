@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Scan QR{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 data-i18n="scan_qr">Scan Attendance QR</h2>
+
+    <p><span data-i18n="hello">Hello</span>, <strong>{{ username }}</strong> (<em>{{ role }}</em>)</p>
+
+    {% if role in ['student','trainer'] %}
+      <div id="reader" class="qr-reader"></div>
+      <p id="status"></p>
+
+      <a class="small-link" href="/dashboard" data-i18n="back_to_dashboard">Back to Dashboard</a>
+
+      <!-- ✅ Load library FIRST -->
+      <script src="{{ url_for('static', filename='js/html5-qrcode.min.js') }}"></script>
+
+      <script>
+      document.addEventListener("DOMContentLoaded", function () {
+
+          const qr = new Html5Qrcode("reader");
+
+          qr.start(
+              { facingMode: "environment" },
+              { fps: 10, qrbox: 250 },
+              async (decodedText) => {
+
+                  // 🔒 Stop camera immediately
+                  await qr.stop();
+
+                  const response = await fetch("/scan", {
+                      method: "POST",
+                      headers: {
+                          "Content-Type": "application/x-www-form-urlencoded"
+                      },
+                      body: "qr=" + decodedText.replace("QRSESSION:", "")
+                  });
+
+                  const result = await response.json();
+
+                  document.getElementById("status").innerText = result.message;
+
+                  if (result.status === "success") {
+                      setTimeout(() => {
+                          window.location.href = "/dashboard";
+                      }, 2000);
+                  }
+              },
+              (error) => {
+                  // optional: console.log(error);
+              }
+          );
+      });
+      </script>
+    {% else %}
+      <p data-i18n="scan_attendance">Scanning is allowed only for <strong>Students</strong> and <strong>Trainers</strong>. Admins should generate the daily QR and view reports on the <a class="small-link" href="/admin">Admin page</a>.</p>
+      <a class="small-link" href="/dashboard" data-i18n="back_to_dashboard">Back to Dashboard</a>
+    {% endif %}
+  </div>
+{% endblock %}

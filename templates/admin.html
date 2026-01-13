@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Admin - Daily QR{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 data-i18n="daily_qr">Daily QR Code</h2>
+
+    <img src="/{{ qr }}" width="250"><br><br>
+
+    <p data-i18n="print_qr">Print or display this QR at the entrance.</p>
+
+    <p><strong data-i18n="todays_attendance">Today's attendance:</strong> {{ count }}</p>
+
+    {% if attendance %}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>#</th><th>Username</th><th>Time</th></tr>
+          </thead>
+          <tbody>
+            {% for row in attendance %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No attendance recorded yet today.</p>
+    {% endif %}
+<!-- 
+    <hr>
+    <h3 data-i18n="trainers">Trainers</h3> -->
+    <!-- {% if trainers %}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>#</th><th>Username</th><th>Reported Today</th></tr>
+          </thead>
+          <tbody>
+            {% for u in trainers %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ u[1] }}</td>
+                <td>{% if u[2] %}Yes{% else %}No{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No trainers found.</p>
+    {% endif %} -->
+
+    <!-- <h3 data-i18n="students">Students</h3>
+    {% if students %}
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>#</th><th>Username</th><th>Reported Today</th></tr>
+          </thead>
+          <tbody>
+            {% for u in students %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ u[1] }}</td>
+                <td>{% if u[2] %}✅{% else %}—{% endif %}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No students found.</p>
+    {% endif %} -->
+
+    <form method="POST" action="/admin/send_report">
+      <button class="btn secondary" type="submit" data-i18n="export_report">Export Today's Report (CSV)</button>
+    </form>
+
+    <br>
+    <a href="/dashboard">View Dashboard</a>
+  </div>
+{% endblock %} 

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Student Login{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 data-i18n="student_login">Student Login</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <p class="error">{{ messages[0] }}</p>
+      {% endif %}
+    {% endwith %}
+
+    <p class="portal-links">
+      <!-- <a class="portal-btn admin" href="/portals" data-i18n="portals">Portals</a> -->
+      <!-- <a class="portal-btn trainer" href="/trainer_portal">Trainer Portal</a> -->
+    </p>
+
+    <!-- <hr> -->
+
+    <form class="login-form" method="POST" action="/student-login">
+      <input class="input" data-i18n-placeholder="username" type="text" name="username" placeholder="Username" required>
+      <input class="input" data-i18n-placeholder="password" type="password" name="password" placeholder="Password" required>
+      <button class="btn primary" type="submit" data-i18n="login">Login</button>
+    </form>
+
+    <p class="small">Back to <a class="small-link" href="/" data-i18n="admin_login">Admin Login</a> or <a class="small-link" href="/user-login" data-i18n="general_user_login">General user login</a></p>
+  </div>
+{% endblock %} 

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}User Login - Students & Trainers{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2>Login (Students & Trainers)</h2>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <p class="error">{{ messages[0] }}</p>
+      {% endif %}
+    {% endwith %}
+
+    <p class="portal-links">
+      <a class="portal-btn student" href="/student-login" data-i18n="student_portal">Student Portal</a>
+      <a class="portal-btn trainer" href="/trainer-login" data-i18n="trainer_portal">Trainer Portal</a>
+      <a class="portal-btn admin" href="/admin-login" data-i18n="admin_portal">Admin Portal</a>
+    </p>
+
+    <hr>
+
+    <form class="login-form" method="POST" action="/user-login">
+      <label for="role" data-i18n="general_user_login">Role:</label>
+      <select class="input" name="role" id="role" required data-i18n-option='{"student":"student_portal","trainer":"trainer_portal"}'>
+        <option value="student">Student</option>
+        <option value="trainer">Trainer</option>
+      </select>
+
+      <input class="input" data-i18n-placeholder="username" type="text" name="username" placeholder="Username" required>
+      <input class="input" data-i18n-placeholder="password" type="password" name="password" placeholder="Password" required>
+      <button class="btn primary" type="submit" data-i18n="login">Login</button>
+    </form>
+
+    <p class="small">Or use direct links: <a class="small-link" href="/student-login" data-i18n="student_portal">Student Login</a> · <a class="small-link" href="/trainer-login" data-i18n="trainer_portal">Trainer Login</a></p>
+    <p class="small">Back to <a class="small-link" href="/" data-i18n="admin_portal">Admin Login</a></p>
+  </div>
+{% endblock %} 

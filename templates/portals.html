@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}VTARS Portals{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 data-i18n="portals">VTARS Portals</h2>
+
+    <p class="portal-links">
+      <a class="portal-btn admin" href="/admin-login" data-i18n="admin_portal">Admin Portal</a>
+      <a class="portal-btn student" href="/student-login" data-i18n="student_portal">Student Portal</a>
+      <a class="portal-btn trainer" href="/trainer-login" data-i18n="trainer_portal">Trainer Portal</a>
+    </p>
+
+    <p class="small">Or use the <a class="small-link" href="/user-login" data-i18n="general_user_login">General User Login</a> (choose role)</p>
+  </div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}VTARS{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <!--Wrap both header and main in div, and apply flex-->
+  <header class="site-header">
+    <div class="page-wrap header-inner">
+      <a class="brand" href="/">VTARS</a>
+      <nav class="nav">
+        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/" data-i18n="home">Home</a>
+        <a class="nav-link {% if request.path.startswith('/dashboard') %}active{% endif %}" href="/dashboard" data-i18n="dashboard">Dashboard</a>
+        <!-- <a class="nav-link {% if request.path == '/portals' %}active{% endif %}" href="/portals" data-i18n="portals">Portals</a> -->
+        <a class="nav-link" href="/logout" data-i18n="logout">Logout</a>
+      </nav>
+      <div class="nav">
+        <a href="#" class="nav-link" data-lang-toggle="en">EN</a>
+        <a href="#" class="nav-link" data-lang-toggle="sw">SW</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer page-wrap">
+    &copy; {{ current_year or '2026' }} VTARS
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+</body>
+</html>

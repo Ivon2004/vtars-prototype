@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 data-i18n="welcome_dashboard">Welcome to VTARS Dashboard</h2>
+
+    <p><span data-i18n="hello">Hello</span>, <strong>{{ username }}</strong> (<em>{{ role }}</em>)</p>
+
+    <!-- <p><span data-i18n="todays_count">Today's Attendance Count:</span> <strong>{{ count }}</strong></p> -->
+
+    {% if role == "admin" %}
+      <a href="/admin"><button class="btn">Generate Daily QR & View Reports</button></a>
+    {% else %}
+      <p>Your reporting status today: <strong>{% if reported %}Reported at {{ reported_time }}{% else %}Not reported{% endif %}</strong></p>
+      <a href="/scan"><button class="btn">Scan Attendance</button></a>
+    {% endif %}
+
+    <br><br>
+    <a class="small-link" href="/logout">Logout</a>
+  </div>
+{% endblock %}
